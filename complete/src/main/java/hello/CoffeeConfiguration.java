@@ -10,15 +10,15 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-public class CoffeeConfiguration implements ICoffeeConfiguration<Coffee> {
+public class CoffeeConfiguration implements ICoffeeConfiguration<String, Coffee> {
 	@Bean
 	public ReactiveRedisOperations<String, Coffee> redisOperations(ReactiveRedisConnectionFactory factory) {
-		Jackson2JsonRedisSerializer<Coffee> serializer = new Jackson2JsonRedisSerializer<>(Coffee.class);
+		final Jackson2JsonRedisSerializer<Coffee> serializer = new Jackson2JsonRedisSerializer<>(Coffee.class);
 
-		RedisSerializationContext.RedisSerializationContextBuilder<String, Coffee> builder =
+		final RedisSerializationContext.RedisSerializationContextBuilder<String, Coffee> builder =
 				RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
-		RedisSerializationContext<String, Coffee> context = builder.value(serializer).build();
+		final RedisSerializationContext<String, Coffee> context = builder.value(serializer).build();
 
 		return new ReactiveRedisTemplate<>(factory, context);
 	}
