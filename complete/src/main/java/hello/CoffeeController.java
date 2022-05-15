@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-public class CoffeeController {
-	private final ReactiveRedisOperations<String, Coffee> coffeeOps;
+public class CoffeeController<E> {
+	private final ReactiveRedisOperations<String, Coffee<E>> coffeeOps;
 
 	@Contract(pure = true)
-	CoffeeController(ReactiveRedisOperations<String, Coffee> coffeeOps) {
+	CoffeeController(ReactiveRedisOperations<String, Coffee<E>> coffeeOps) {
 		this.coffeeOps = coffeeOps;
 	}
 
 	@GetMapping("/coffees")
-	public Flux<Coffee> all() {
+	public Flux<Coffee<E>> all() {
 		return coffeeOps.keys("*")
 				.flatMap(coffeeOps.opsForValue()::get);
 	}

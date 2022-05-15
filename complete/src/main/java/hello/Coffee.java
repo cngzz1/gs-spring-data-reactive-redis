@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Coffee {
+public class Coffee<E> {
 	private String id;
 	private String name;
 }
