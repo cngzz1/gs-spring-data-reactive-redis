@@ -20,7 +20,7 @@ public class CoffeeConfiguration implements ICoffeeConfiguration<String, Coffee>
 
 		final RedisSerializationContext<String, Coffee> context = builder.value(serializer).build();
 
-		return new ReactiveRedisTemplate<>(factory, context);
+		return new ReactiveRedisTemplate(factory, context);
 	}
 
 }

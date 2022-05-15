@@ -1,10 +1,12 @@
 package hello;
 
 import org.jetbrains.annotations.Contract;
+import org.reactivestreams.Publisher;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
+
 
 @RestController
 public class CoffeeController<E> {
@@ -15,8 +17,9 @@ public class CoffeeController<E> {
 		this.coffeeOps = coffeeOps;
 	}
 
+	@Cacheable
 	@GetMapping("/coffees")
-	public Flux<Coffee<E>> all() {
+	public Publisher<Coffee<E>> all() {
 		return coffeeOps.keys("*")
 				.flatMap(coffeeOps.opsForValue()::get);
 	}

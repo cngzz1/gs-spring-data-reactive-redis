@@ -6,4 +6,6 @@ public interface ICoffeeLoader<E> {
     @PostConstruct
     void loadData();
 
+    E getCoffee();
+
 }
